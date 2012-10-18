@@ -50,12 +50,14 @@
 + (M2Person *)personWithName:(NSString *)name
                 hourlyRate:(double)rate {
     M2Person *ret = [[M2Person alloc] initWithName:name rate:rate];
+    [ret autorelease];
     return ret;
 }
 
 - (id)initWithName:(NSString*)aParticipantName rate:(double)aRate {
     
     // directly, inside an 'init...'
+     self = [super init];
     _name = [aParticipantName copy];
     _hourlyRate = [[NSNumber alloc] initWithDouble:aRate];
 

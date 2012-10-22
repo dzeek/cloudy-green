@@ -35,12 +35,17 @@
 }
 
 - (NSString *)description {
-    NSString*  ret = [[NSString alloc] initWithString:@"meeting?"];
-//    [ret initWithFormat:@"Meeting, start: %@ - stop: %@", _startingTime, _endingTime];
-    [ret retain];
-    [_description release];
- 
-    _description = ret;
+    NSString*  ret = [[NSString alloc] init];
+    
+    // [ret initWithFormat:@"Meeting, start: %@ - stop: %@", _startingTime, _endingTime];
+    for (M2Person *bob_like in [self personsPresent] )
+    {
+        // NSLog(@"Iterating thru meeting: person: %@", [bob_like description] );
+        NSString* add_a_name = [[bob_like description] stringByAppendingString:@"  "];
+        ret = [ret stringByAppendingString:add_a_name];
+    }
+    [ret autorelease];
+
     return ret;
 }
 
@@ -106,7 +111,7 @@
 }
 - (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx
 {
-    NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: entry");
+    // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: entry");
     if (nil == _personsPresent) {
         [self setPersonsPresent:[[NSMutableArray alloc] init]];
         NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: : Created array");
@@ -114,7 +119,7 @@
         NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: index out of range");
     } else {
         
-        NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: move all items one up, add this");
+        // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: move all items one up, add this");
         // seems like could be parameter checking of some sort, works OK
         [[self personsPresent] insertObject:anObject atIndex:idx];
         
@@ -131,9 +136,22 @@
 }
 - (NSUInteger)elapsedSeconds
 {
-    NSUInteger _time_spent = [_endingTime timeIntervalSince1970] - [_startingTime timeIntervalSince1970];
-    NSLog(@"Seconds in meet: %ld", _time_spent);
-    return _time_spent;
+    NSTimeInterval elapsed_interval = 0.0;
+
+    NSDate* meetStartDate = [self startingTime];
+    if (nil != meetStartDate) {
+        NSDate* now = [[NSDate alloc] init];
+
+        NSDate* meetEndDate = [self endingTime];
+        if (nil == meetEndDate) {
+           elapsed_interval = [now timeIntervalSinceDate:meetStartDate];
+        } else {
+           elapsed_interval = [meetEndDate timeIntervalSinceDate:meetStartDate];
+        }
+    }
+    
+    NSLog(@"Seconds in meet: %f", elapsed_interval);
+    return elapsed_interval;
 }
 - (double)elapsedHours
 {
@@ -159,7 +177,7 @@
     double total_billing = 0.0;
     for (M2Person *bob_like in [self personsPresent] )
     {
-        NSLog(@"Iterating thru meeting: person: %@", [bob_like description] );
+        // NSLog(@"Meeting.totalBillingRate: iterating thru meeting: person: %@", [bob_like description] );
         total_billing += [[bob_like hourlyRate] doubleValue];
     }
     NSNumber *ret = [[NSNumber alloc] initWithDouble:total_billing];

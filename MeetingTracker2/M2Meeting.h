@@ -34,7 +34,7 @@
 - (NSString *)elapsedTimeDisplayString;
 
 - (NSNumber *)accruedCost;
-- (NSDecimalNumber *)totalBillingRate;
+- (NSNumber *)totalBillingRate;
 
 + (M2Meeting *)meetingWithStooges;
 + (M2Meeting *)meetingWithCaptains;

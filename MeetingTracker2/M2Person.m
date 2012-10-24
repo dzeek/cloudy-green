@@ -10,6 +10,13 @@
 
 @implementation M2Person
 
+- (void) initWithEncoder:(NSCoder *)encoder
+{
+    // directly, inside an 'init...'
+    [encoder encodeObject:_name forKey:@"personName"];
+    [encoder encodeObject:_hourlyRate forKey:@"hourlyRate"];
+}
+
 - (void) dealloc
 {
     [_name release];

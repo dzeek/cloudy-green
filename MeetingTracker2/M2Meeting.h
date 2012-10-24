@@ -11,9 +11,9 @@
 @interface M2Meeting : NSObject
 {
     NSDate *_startingTime;
-	NSDate *_endingTime;
-	
-	NSMutableArray *_personsPresent;
+    NSDate *_endingTime;
+
+    NSMutableArray *_personsPresent;
 }
 
 - (NSDate *)startingTime;

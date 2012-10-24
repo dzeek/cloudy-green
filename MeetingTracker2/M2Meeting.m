@@ -25,6 +25,13 @@
     return self;
 }
 
+-(void)initWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:_startingTime   forKey:@"startingTime"];
+    [encoder encodeObject:_endingTime     forKey:@"endingTime"];
+    [encoder encodeObject:_personsPresent forKey:@"personsPresent"];
+}
+
 - (void) dealloc {
     [_description release];
     _description = nil;
@@ -150,7 +157,7 @@
         }
     }
     
-    NSLog(@"Seconds in meet: %f", elapsed_interval);
+    // NSLog(@"Seconds in meet: %f", elapsed_interval);
     return elapsed_interval;
 }
 - (double)elapsedHours
@@ -182,6 +189,12 @@
     }
     NSNumber *ret = [[NSNumber alloc] initWithDouble:total_billing];
     return ret;
+}
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:[self startingTime] forKey:@"startingTime"];
+    [encoder encodeObject:[self endingTime] forKey:@"endingTime"];
+    [encoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
 }
 
 + (M2Meeting *)meetingWithStooges

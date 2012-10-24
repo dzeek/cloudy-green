@@ -33,6 +33,7 @@
     return self;
 }
 
+
 - (void) dealloc
 {
     [_meeting release];
@@ -175,7 +176,8 @@
 //    return nil;
     
     // FIXME: placeholder
-    return [NSData data];
+    // return [NSData data];
+    return [NSKeyedArchiver archivedDataWithRootObject:self.meeting];
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
@@ -183,8 +185,20 @@
     // Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-    @throw exception;
+
+    M2Meeting *newMeeting;
+    @try {
+        newMeeting = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    @catch (NSException *e) {
+        if (outError) {
+            NSDictionary *d = [NSDictionary dictionaryWithObject:NSLocalizedString(@"Data is corrupted.", @"readFromData error reason") forKey:NSLocalizedFailureReasonErrorKey];
+            *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:d];
+        }
+        return NO;
+    }
+//    NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
+//    @throw exception;
     return YES;
 }
 
@@ -231,7 +245,6 @@
     [[self totalBillBindingKvoLabel] setStringValue:@"-"];
     [[self totalBillArrayBindingLabel] setStringValue:@"-"];
 }
-
 
 
 

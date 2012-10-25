@@ -9,7 +9,7 @@
 #import "M2Meeting.h"
 #import "M2Person.h"
 
-@interface M2Meeting ()
+@interface M2Meeting () <NSCoding>
 {
     NSString *_description;
     NSString *_time_display;
@@ -25,11 +25,23 @@
     return self;
 }
 
--(void)initWithCoder:(NSCoder *)encoder
+-(id)initWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeObject:_startingTime   forKey:@"startingTime"];
-    [encoder encodeObject:_endingTime     forKey:@"endingTime"];
-    [encoder encodeObject:_personsPresent forKey:@"personsPresent"];
+    self = [super init];
+    if (self) {
+        _startingTime = [encoder decodeObjectForKey:@"startingTime"];
+        _endingTime = [encoder decodeObjectForKey:@"endingTime"];
+
+        _personsPresent = [encoder decodeObjectForKey:@"personsPresent"];
+    }
+    return self;
+}
+-(void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:[self startingTime] forKey:@"startingTime"];
+    [encoder encodeObject:[self endingTime] forKey:@"endingTime"];
+    
+    [encoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
 }
 
 - (void) dealloc {
@@ -43,6 +55,8 @@
 
 - (NSString *)description {
     NSString*  ret = [[NSString alloc] init];
+    
+    ret = [ret stringByAppendingString:@"Meeting!: "];
     
     // [ret initWithFormat:@"Meeting, start: %@ - stop: %@", _startingTime, _endingTime];
     for (M2Person *bob_like in [self personsPresent] )
@@ -189,12 +203,6 @@
     }
     NSNumber *ret = [[NSNumber alloc] initWithDouble:total_billing];
     return ret;
-}
--(void)encodeWithCoder:(NSCoder *)encoder
-{
-    [encoder encodeObject:[self startingTime] forKey:@"startingTime"];
-    [encoder encodeObject:[self endingTime] forKey:@"endingTime"];
-    [encoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
 }
 
 + (M2Meeting *)meetingWithStooges

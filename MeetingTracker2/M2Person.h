@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface M2Person : NSObject
+@interface M2Person : NSObject <NSCoding>
 {
     NSString *_name;
     NSNumber *_hourlyRate;

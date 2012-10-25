@@ -36,5 +36,7 @@
 - (IBAction)startMeeting:(id)sender;
 - (IBAction)endMeeting:(id)sender;
 
+-(void)encodeWithCoder:(NSCoder *)encoder;
+-(void)initWithCoder:(NSCoder *)encoder;
 
 @end

@@ -10,11 +10,20 @@
 
 @implementation M2Person
 
-- (void) initWithEncoder:(NSCoder *)encoder
+- (id) initWithCoder:(NSCoder *)encoder
 {
-    // directly, inside an 'init...'
-    [encoder encodeObject:_name forKey:@"personName"];
-    [encoder encodeObject:_hourlyRate forKey:@"hourlyRate"];
+    self = [super init];
+    if (self) {
+        // directly, inside an 'init...'
+        _name = [encoder decodeObjectForKey:@"personName"];
+        _hourlyRate = [encoder decodeObjectForKey:@"hourlyRate"];
+    }
+    return self;
+}
+- (void) encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeObject:[self name] forKey:@"personName"];
+    [encoder encodeObject:[self hourlyRate] forKey:@"hourlyRate"];
 }
 
 - (void) dealloc

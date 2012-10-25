@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MeetingTracker2/M2Meeting.m"
-         timestampString = "372545874.51832"
+         timestampString = "372823992.730431"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "124"
-         endingLineNumber = "124"
+         startingLineNumber = "138"
+         endingLineNumber = "138"
          landmarkName = "-insertObject:inPersonsPresentAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,12 +47,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "MeetingTracker2/Meet2Document.m"
-         timestampString = "372742480.768096"
+         timestampString = "372823992.730431"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
          landmarkName = "-setTimer:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MeetingTracker2/Meet2Document.m"
+         timestampString = "372823992.730431"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
+         landmarkName = "-windowControllerDidLoadNib:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "MeetingTracker2/Meet2Document.m"
+         timestampString = "372824210.701718"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "214"
+         endingLineNumber = "214"
+         landmarkName = "-readFromData:ofType:error:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

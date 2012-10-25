@@ -24,11 +24,9 @@
 {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
-        // [self setMeeting:[[M2Meeting alloc] init]];
+    
         _meeting = [[M2Meeting alloc] init];
        
-        // this doesn't work
     }
     return self;
 }
@@ -109,7 +107,7 @@
     [[self addParticipantButton] setEnabled:NO];
     [[self removeParticipantButton] setEnabled:NO];
 }
-- (IBAction)endMeeting:(id)sender
+- (NSDateFormatter *)meetingDateFormatter
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -119,6 +117,13 @@
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     [usLocale autorelease];
+
+    return dateFormatter;
+}
+
+- (IBAction)endMeeting:(id)sender
+{
+    NSDateFormatter *dateFormatter = [self meetingDateFormatter];
     
     NSDate* now = [[NSDate alloc] init];
     [[self meeting] setEndingTime:now];
@@ -148,11 +153,31 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController
 {
     [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
+
     [self setTimer:[NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(updateGui:) userInfo:nil repeats:YES]];
     
-    [[self meetStartTime] setStringValue:@""];
-    [[self meetEndTimeLabel] setStringValue:@""];
+    // get values from reload if avail
+    M2Meeting *meet = [self meeting];
+    
+    int n_present = (int)[meet countOfPersonsPresent];
+    
+    if (0 < n_present) {
+        NSLog(@"Doc::windowControllerDidLoadNib: an attended meeting: %@", meet);
+        NSDateFormatter *dateFormatter = [self meetingDateFormatter];
+        NSDate *a_time = [meet startingTime];
+        NSDate *b_time = [meet endingTime];
+        NSLog(@"Doc::windowControllerDidLoadNib: start-time: %@    end-time: %@", a_time, b_time);
+        NSString* start_caption = [dateFormatter stringFromDate:a_time];
+        NSString* ending_caption = [dateFormatter stringFromDate:b_time];
+
+        NSLog(@"Doc::windowControllerDidLoadNib: Start-caption: %@  ending-caption: %@", start_caption, ending_caption);
+        // [[self meetStartTime] setStringValue:@"start_caption"];
+        // [[self meetEndTimeLabel] setStringValue:@"ending_caption"];
+    }else {
+        [[self meetStartTime] setStringValue:@""];
+        [[self meetEndTimeLabel] setStringValue:@""];
+    }
+    
     [[self endMeetingButton] setEnabled:NO];
     
     [self setDisplayName:@"Agile Meeting Tracker"];

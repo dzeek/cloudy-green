@@ -63,6 +63,7 @@
 		B077106C162AF5D500E1ADCE /* testPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testPerson.h; sourceTree = "<group>"; };
 		B077106D162AF5D500E1ADCE /* testMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testMeeting.m; sourceTree = "<group>"; };
 		B077106E162AF5D500E1ADCE /* testPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testPerson.m; sourceTree = "<group>"; };
+		B0BA9DF8163C650600BA63D4 /* M2ObserverManagerIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2ObserverManagerIF.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +131,7 @@
 			children = (
 				B077103C16299F6700E1ADCE /* Meet2Document.h */,
 				B077103D16299F6700E1ADCE /* Meet2Document.m */,
+				B0BA9DF8163C650600BA63D4 /* M2ObserverManagerIF.h */,
 				B077103F16299F6700E1ADCE /* Meet2Document.xib */,
 				B077104216299F6700E1ADCE /* MainMenu.xib */,
 				B077103116299F6700E1ADCE /* Supporting Files */,
@@ -481,6 +483,7 @@
 				B077105D16299F6700E1ADCE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B077105E16299F6700E1ADCE /* Build configuration list for PBXNativeTarget "MeetingTracker2Tests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +492,7 @@
 				B077106016299F6700E1ADCE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

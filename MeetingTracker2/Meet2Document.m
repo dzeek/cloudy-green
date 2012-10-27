@@ -1,4 +1,3 @@
-//
 //  Meet2Document.m
 //  MeetingTracker2
 //
@@ -19,7 +18,44 @@
 @end
 
 @implementation Meet2Document
+static void *M2DocumentKVOContext;
 
+- (void) startObservingPerson:(id)m2person
+{
+    [m2person addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionOld context:&M2DocumentKVOContext];
+    [m2person addObserver:self forKeyPath:@"hourlyRate" options:NSKeyValueObservingOptionOld context:&M2DocumentKVOContext];
+}
+
+- (void) stopObservingPerson:(id)m2person
+{
+    [m2person removeObserver:self forKeyPath:@"name" context:&M2DocumentKVOContext];
+    [m2person removeObserver:self forKeyPath:@"hourlyRate" context:&M2DocumentKVOContext];
+}
+
+- (void) changeKeyPath:(NSString *)keyPath ofObject:(id)obj toValue:(id)newValue
+{
+    // setValue:forKeyPath: will cause the key-value observing method
+    // to be called, which takes care of teh undo particulars.
+    
+    [obj setValue:newValue forKeyPath:keyPath];
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)changeDict context:(void *)context
+{
+    if (context != &M2DocumentKVOContext) {
+        // no match, skip action
+        // [super observeValueForKeyPath:<#keyPath#> ofObject:<#object#> change:changeDict context:<#context#>];
+        return;
+    }
+    NSUndoManager *undo = [self undoManager];
+    id oldValue = [changeDict objectForKey:NSKeyValueChangeOldKey];
+    if ([NSNull null] == oldValue) {
+        oldValue = nil;
+    }
+    NSLog(@"oldValue = %@", oldValue);
+    [[undo prepareWithInvocationTarget:self] changeKeyPath:keyPath ofObject:object toValue:oldValue];
+    [undo setActionName:@"Edit"];
+}
 - (id)init
 {
     self = [super init];
@@ -39,6 +75,35 @@
     
     [super dealloc];
 }
+
+- (void)insertObject:(M2Person *)object inPersonsPresentAtIndex:(NSUInteger)index
+{
+    NSLog(@"Document.insertObject:inPersonsPresentAtIndex: NEVER CALLED");
+    NSLog(@"Document.insertObject:inPersonsPresentAtIndex: adding %@ to %@", object, [[self meeting] personsPresent]);
+
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] removeObjectFromPersonsPresentAtIndex:index];
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Add Person"];
+    }
+
+    [[[self meeting] personsPresent] insertObject:object atIndex:index];
+}
+-(void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)index
+{
+    M2Person *m2p = [[[self meeting ]personsPresent] objectAtIndex:index];
+    NSLog(@"Meet2Document.removeObjectFromPersonsPresentAtIndex: removing %@ from %@", m2p, [[self meeting]  personsPresent]);
+
+    // add the inverse 
+    NSUndoManager *undo = [self undoManager];
+    [[undo prepareWithInvocationTarget:self] insertObject:m2p inPersonsPresentAtIndex:index];
+    if (![undo isUndoing]) {
+        [undo setActionName:@"Remove Person"];
+    }
+    
+    [[[self meeting] personsPresent] removeObjectAtIndex:index];
+}
+
 
 - (M2Meeting *)meeting
 {
@@ -182,7 +247,9 @@
     
     [self setDisplayName:@"Agile Meeting Tracker"];
 
-    // NSLog(@"after setTimer in windowControlllerDidLoadNib");
+    // NSLog(@"end of windowControlllerDidLoadNib, has undo: %u", hasUndoManager());
+    [[self meeting] setUndoManager:[self undoManager]];
+    [[self meeting] setObserver_manager:self];
 }
 
 + (BOOL)autosavesInPlace
@@ -271,7 +338,19 @@
     [[self totalBillArrayBindingLabel] setStringValue:@"-"];
 }
 
+-(id) initWithCoder:(NSCoder *)encoder
+{
+    self = [super init];
+    if (self) {
+        _meeting = [[M2Meeting alloc] initWithCoder:encoder];
+    }
+    return self;
+}
 
+-(void) encodeWithCoder:(NSCoder *)encoder
+{
+    [[self meeting] encodeWithCoder:encoder];
+}
 
 
 

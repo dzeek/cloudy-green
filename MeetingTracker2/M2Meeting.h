@@ -7,14 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Meet2Document;
 
-@interface M2Meeting : NSObject
+@interface M2Meeting : NSObject <NSCoding>
 {
     NSDate *_startingTime;
     NSDate *_endingTime;
 
     NSMutableArray *_personsPresent;
 }
+
+
+// to what degree does this break model independence re: MVC
+@property (assign) NSUndoManager *undoManager;
+// here is break in model independent
+@property (assign) Meet2Document *observer_manager;
+
+
 
 - (NSDate *)startingTime;
 - (void)setStartingTime:(NSDate *)aStartingTime;

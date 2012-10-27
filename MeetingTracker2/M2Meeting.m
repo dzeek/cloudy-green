@@ -76,9 +76,9 @@
 - (void)setStartingTime:(NSDate *)aStartingTime
 {
     [aStartingTime retain];
-//    [_startingTime invalidate];
     [_startingTime release];
     _startingTime = aStartingTime;
+
 }
 - (NSDate *)endingTime
 {
@@ -94,14 +94,25 @@
 
 - (NSMutableArray *)personsPresent
 {
+    // output at 5 Hz or more ... NSLog(@"M2Meeting.personsPresent: entry");
     return _personsPresent;
 }
 - (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent
 {
+    NSLog(@"M2Meeting.setPersonsPresent: entry");
+    for (M2Person *m2person in [self personsPresent]) {
+        [[self observer_manager] stopObservingPerson:m2person];
+    }
     [aPersonsPresent retain];
     [_personsPresent release];
+    
     _personsPresent = aPersonsPresent;
+    for (M2Person *m2person in [self personsPresent]) {
+        [[self observer_manager] startObservingPerson:m2person];
+    }
+    
 }
+
 - (void)addToPersonsPresent:(id)personsPresentObject
 {
     NSLog(@"M2Meeting::addToPersonsPresent: entry");
@@ -110,10 +121,17 @@
         NSLog(@"M2Meeting::addToPersonsPresent: Created array");
     }
     [_personsPresent addObject:personsPresentObject];
+
+    NSLog(@"M2Meeting::addToPersonsPresent: adding to passed-in undoManager");
+    [[[self undoManager] prepareWithInvocationTarget:self] removeFromPersonsPresent:personsPresentObject];
 }
 - (void)removeFromPersonsPresent:(id)personsPresentObject
 {
     NSLog(@"M2Meeting::removeFromPersonsPresent: entry");
+    
+    if (nil != [self observer_manager]) {
+        [[self observer_manager] stopObservingPerson:personsPresentObject];        
+    }
     if (nil != _personsPresent) {
         [_personsPresent removeObject:personsPresentObject];
     } else {
@@ -124,7 +142,10 @@
 {
     NSLog(@"M2Meeting::removeObjectFromPersonsPresentAtIndex: entry");
     if (nil != _personsPresent) {
-        [_personsPresent removeObjectAtIndex:idx];
+        [[self personsPresent] removeObjectAtIndex:idx];
+
+        //  NSLog(@"M2Meeting::removeObjectFromPersonsPresentAtIndex: undo/redo");
+        //  [[[self undoManager] prepareWithInvocationTarget:self] removeFromPersonsPresent:personsPresentObject];
     } else {
         NSLog(@"M2Meeting::removeObjectFromPersonsPresentAtIndex: _personsPresent nil");
     }
@@ -132,7 +153,7 @@
 }
 - (void)insertObject:(id)anObject inPersonsPresentAtIndex:(NSUInteger)idx
 {
-    // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: entry");
+    NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: entry");
     if (nil == _personsPresent) {
         [self setPersonsPresent:[[NSMutableArray alloc] init]];
         NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: : Created array");
@@ -141,6 +162,13 @@
     } else {
         
         // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: move all items one up, add this");
+        
+        NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: adding to passed-in undoManager");
+        [[[self undoManager] prepareWithInvocationTarget:self] removeFromPersonsPresent:anObject];
+
+        // turn on observation
+        [[self observer_manager] startObservingPerson:anObject];
+        
         // seems like could be parameter checking of some sort, works OK
         [[self personsPresent] insertObject:anObject atIndex:idx];
         

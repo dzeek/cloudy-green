@@ -15,19 +15,19 @@
     M2Meeting *_meeting;
 	NSTimer *_timer;
 }
-@property (assign) IBOutlet NSTextField *currentTimeLabel;
-@property (assign) IBOutlet NSTextField *elapsedTimeLabel;
-@property (assign) IBOutlet NSTextField *accruedCostLabel;
-@property (assign) IBOutlet NSTextField *totalBillTargetActionLabel;
-@property (assign) IBOutlet NSTextField *totalBillBindingKvoLabel;
-@property (assign) IBOutlet NSTextField *totalBillArrayBindingLabel;
+@property (retain) IBOutlet NSTextField *currentTimeLabel;
+@property (retain) IBOutlet NSTextField *elapsedTimeLabel;
+@property (retain) IBOutlet NSTextField *accruedCostLabel;
+@property (retain) IBOutlet NSTextField *totalBillTargetActionLabel;
+@property (retain) IBOutlet NSTextField *totalBillBindingKvoLabel;
+@property (retain) IBOutlet NSTextField *totalBillArrayBindingLabel;
 
-@property (assign) IBOutlet NSTextField *meetStartTime;
-@property (assign) IBOutlet NSTextField *meetEndTimeLabel;
-@property (assign) IBOutlet NSButton *startMeetingButton;
-@property (assign) IBOutlet NSButton *endMeetingButton;
-@property (assign) IBOutlet NSButton *addParticipantButton;
-@property (assign) IBOutlet NSButton *removeParticipantButton;
+@property (retain) IBOutlet NSTextField *meetStartTime;
+@property (retain) IBOutlet NSTextField *meetEndTimeLabel;
+@property (retain) IBOutlet NSButton *startMeetingButton;
+@property (retain) IBOutlet NSButton *endMeetingButton;
+@property (retain) IBOutlet NSButton *addParticipantButton;
+@property (retain) IBOutlet NSButton *removeParticipantButton;
 
 - (void) startObservingPerson:(id)m2person;
 - (void) stopObservingPerson:(id) m2person;
@@ -43,7 +43,7 @@
 - (void)insertObject:(M2Person *)object inPersonsPresentAtIndex:(NSUInteger)index;
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)index;
 
-- (void)encodeWithCoder:(NSCoder *)encoder;
-- (id)initWithCoder:(NSCoder *)encoder;
+//- (void)encodeWithCoder:(NSCoder *)encoder;
+//- (id)initWithCoder:(NSCoder *)encoder;
 
 @end

@@ -15,14 +15,19 @@
     self = [super init];
     if (self) {
         // directly, inside an 'init...'
-        _name = [encoder decodeObjectForKey:@"personName"];
+
+        _name = [encoder decodeObjectForKey:@"name"];
+        [_name retain];
+
         _hourlyRate = [encoder decodeObjectForKey:@"hourlyRate"];
+        [_hourlyRate retain];
+
     }
     return self;
 }
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
-    [encoder encodeObject:[self name] forKey:@"personName"];
+    [encoder encodeObject:[self name] forKey:@"name"];
     [encoder encodeObject:[self hourlyRate] forKey:@"hourlyRate"];
 }
 

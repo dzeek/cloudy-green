@@ -8,6 +8,10 @@
 
 #import "M2Meeting.h"
 #import "M2Person.h"
+#import "M2PreferenceController.h"
+
+// ideally, I would put a protocol?/interface in here for observer manager
+#import "Meet2Document.h"
 
 @interface M2Meeting () <NSCoding>
 {
@@ -30,17 +34,28 @@
     self = [super init];
     if (self) {
         _startingTime = [encoder decodeObjectForKey:@"startingTime"];
+        [_startingTime retain];
+        // NSLog(@"decode and retain %@ for startingTime", _startingTime);
+        
         _endingTime = [encoder decodeObjectForKey:@"endingTime"];
+        [_endingTime retain];
+        // NSLog(@"decode and retain %@ for ending time", _endingTime);
 
         _personsPresent = [encoder decodeObjectForKey:@"personsPresent"];
+        [_personsPresent retain];
+        // NSLog(@"decode and retain %@ for persons-present", _personsPresent);
     }
     return self;
 }
 -(void)encodeWithCoder:(NSCoder *)encoder
 {
+    NSLog(@"encode %@ for startingTime", [self startingTime]);
     [encoder encodeObject:[self startingTime] forKey:@"startingTime"];
+    
+    NSLog(@"encode %@ for endingTime", [self endingTime]);
     [encoder encodeObject:[self endingTime] forKey:@"endingTime"];
     
+    NSLog(@"encode %@ for persons-present", [self personsPresent]);
     [encoder encodeObject:[self personsPresent] forKey:@"personsPresent"];
 }
 
@@ -49,6 +64,13 @@
     _description = nil;
     [_time_display release];
     _time_display = nil;
+
+    [_startingTime release];
+    _startingTime = nil;
+    [_endingTime release];
+    _endingTime = nil;
+    [_personsPresent release];
+    _personsPresent = nil;
 
     [super dealloc];
 }
@@ -99,15 +121,15 @@
 }
 - (void)setPersonsPresent:(NSMutableArray *)aPersonsPresent
 {
-    NSLog(@"M2Meeting.setPersonsPresent: entry");
     for (M2Person *m2person in [self personsPresent]) {
         [[self observer_manager] stopObservingPerson:m2person];
     }
+    
     [aPersonsPresent retain];
     [_personsPresent release];
-    
     _personsPresent = aPersonsPresent;
-    for (M2Person *m2person in [self personsPresent]) {
+   
+    for (NSObject *m2person in [self personsPresent]) {
         [[self observer_manager] startObservingPerson:m2person];
     }
     
@@ -115,11 +137,26 @@
 
 - (void)addToPersonsPresent:(id)personsPresentObject
 {
-    NSLog(@"M2Meeting::addToPersonsPresent: entry");
+    
+    NSLog(@"THIS DOESNT USUALLY GET CALLED");
     if (nil == _personsPresent) {
         [self setPersonsPresent:[[NSMutableArray alloc] init]];
-        NSLog(@"M2Meeting::addToPersonsPresent: Created array");
+        NSLog(@"M2Meeting::addToPersonsPresent: Created array/lazy load");
     }
+    
+    // Update with preferences
+    NSNumber *def_hourly_rate = [M2PreferenceController billingRate];
+    if ([personsPresentObject isKindOfClass:[M2Person class]]) {
+        M2Person *m2person = (M2Person *)personsPresentObject;
+        
+        NSLog(@"M2Meeting::addToPersonsPresent: m2person: %@", m2person);
+        
+        [m2person setHourlyRate:def_hourly_rate];
+    } else {
+        NSLog(@"M2Meeting::addToPersonsPresent: NOT an m2person");
+    }
+    
+    
     [_personsPresent addObject:personsPresentObject];
 
     NSLog(@"M2Meeting::addToPersonsPresent: adding to passed-in undoManager");
@@ -163,7 +200,21 @@
         
         // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: move all items one up, add this");
         
-        NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: adding to passed-in undoManager");
+        // Update with preferences
+        NSNumber *def_hourly_rate = [M2PreferenceController billingRate];
+        if ([anObject isKindOfClass:[M2Person class]]) {
+            M2Person *m2person = (M2Person *)anObject;
+            [m2person setHourlyRate:def_hourly_rate];
+            
+            NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: m2person: %@", m2person);
+            
+        } else {
+            NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: NOT an m2person");
+        }
+        
+
+        
+        // NSLog(@"M2Meeting::insertObject:inPersonsPresentAtIndex: adding to passed-in undoManager");
         [[[self undoManager] prepareWithInvocationTarget:self] removeFromPersonsPresent:anObject];
 
         // turn on observation

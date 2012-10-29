@@ -73,6 +73,42 @@ static void *M2DocumentKVOContext;
     [_meeting release];
     _meeting = nil;
     
+    [_currentTimeLabel release];
+    _currentTimeLabel = nil;
+
+    [_elapsedTimeLabel release];
+    _elapsedTimeLabel = nil;
+
+    [_accruedCostLabel release];
+    _accruedCostLabel = nil;
+
+    [_totalBillTargetActionLabel release];
+    _totalBillTargetActionLabel = nil;
+
+    [_totalBillBindingKvoLabel release];
+    _totalBillBindingKvoLabel = nil;
+
+    [_totalBillArrayBindingLabel release];
+    _totalBillArrayBindingLabel = nil;
+
+    [_meetStartTime release];
+    _meetStartTime = nil;
+
+    [_meetEndTimeLabel release];
+    _meetEndTimeLabel = nil;
+
+    [_startMeetingButton release];
+    _startMeetingButton = nil;
+
+    [_endMeetingButton release];
+    _endMeetingButton = nil;
+
+    [_addParticipantButton release];
+    _addParticipantButton = nil;
+
+    [_removeParticipantButton release];
+    _removeParticipantButton = nil;
+
     [super dealloc];
 }
 
@@ -227,15 +263,15 @@ static void *M2DocumentKVOContext;
     int n_present = (int)[meet countOfPersonsPresent];
     
     if (0 < n_present) {
-        NSLog(@"Doc::windowControllerDidLoadNib: an attended meeting: %@", meet);
-        NSDateFormatter *dateFormatter = [self meetingDateFormatter];
-        NSDate *a_time = [meet startingTime];
-        NSDate *b_time = [meet endingTime];
-        NSLog(@"Doc::windowControllerDidLoadNib: start-time: %@    end-time: %@", a_time, b_time);
-        NSString* start_caption = [dateFormatter stringFromDate:a_time];
-        NSString* ending_caption = [dateFormatter stringFromDate:b_time];
+        // NSLog(@"Doc::windowControllerDidLoadNib: an attended meeting: %@", meet);
+        // NSDateFormatter *dateFormatter = [self meetingDateFormatter];
+        // NSDate *a_time = [meet startingTime];
+        // NSDate *b_time = [meet endingTime];
+        // NSLog(@"Doc::windowControllerDidLoadNib: start-time: %@    end-time: %@", a_time, b_time);
+        // NSString* start_caption = [dateFormatter stringFromDate:a_time];
+        // NSString* ending_caption = [dateFormatter stringFromDate:b_time];
 
-        NSLog(@"Doc::windowControllerDidLoadNib: Start-caption: %@  ending-caption: %@", start_caption, ending_caption);
+        // NSLog(@"Doc::windowControllerDidLoadNib: Start-caption: %@  ending-caption: %@", start_caption, ending_caption);
         // [[self meetStartTime] setStringValue:@"start_caption"];
         // [[self meetEndTimeLabel] setStringValue:@"ending_caption"];
     }else {
@@ -260,15 +296,7 @@ static void *M2DocumentKVOContext;
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
     // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
     
-    
-//    NSException *exception = [NSException exceptionWithName:@"UnimplementedMethod" reason:[NSString stringWithFormat:@"%@ is unimplemented", NSStringFromSelector(_cmd)] userInfo:nil];
-//    @throw exception;
-//    return nil;
-    
-    // FIXME: placeholder
-    // return [NSData data];
     return [NSKeyedArchiver archivedDataWithRootObject:self.meeting];
 }
 
@@ -278,9 +306,14 @@ static void *M2DocumentKVOContext;
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
 
-    M2Meeting *newMeeting;
+    // M2Meeting *newMeeting;
     @try {
-        newMeeting = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        M2Meeting *incoming = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        // NSLog(@"Meet2Document.readFromData: incoming is %@", [incoming className]);
+        [[self meeting] setStartingTime:[incoming startingTime]];
+        [[self meeting] setEndingTime:[incoming endingTime]];
+        NSMutableArray *persons = [incoming personsPresent];
+        [[self meeting] setPersonsPresent:persons];
     }
     @catch (NSException *e) {
         if (outError) {
@@ -336,6 +369,18 @@ static void *M2DocumentKVOContext;
     
     [[self totalBillBindingKvoLabel] setStringValue:@"-"];
     [[self totalBillArrayBindingLabel] setStringValue:@"-"];
+
+    NSDate *start = [[self meeting] startingTime];
+    if (nil != start) {
+        NSString* start_caption = [[self meetingDateFormatter] stringFromDate:start];
+        [[self meetStartTime] setStringValue:start_caption];
+    }
+    
+    NSDate *ending = [[self meeting] endingTime];
+    if (nil != ending) {
+        NSString* stop_caption = [[self meetingDateFormatter] stringFromDate:ending];
+        [[self meetEndTimeLabel] setStringValue:stop_caption];
+    }
 }
 
 -(id) initWithCoder:(NSCoder *)encoder

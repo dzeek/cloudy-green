@@ -22,6 +22,10 @@
 		B077106A1629C08800E1ADCE /* M2Meeting.m in Sources */ = {isa = PBXBuildFile; fileRef = B07710691629C08800E1ADCE /* M2Meeting.m */; };
 		B077106F162AF5D500E1ADCE /* testMeeting.m in Sources */ = {isa = PBXBuildFile; fileRef = B077106D162AF5D500E1ADCE /* testMeeting.m */; };
 		B0771070162AF5D500E1ADCE /* testPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = B077106E162AF5D500E1ADCE /* testPerson.m */; };
+		B0BA9DFD163C7BA300BA63D4 /* M2PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BA9DFB163C7BA300BA63D4 /* M2PreferenceController.m */; };
+		B0BA9DFE163C7BA300BA63D4 /* M2PreferenceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BA9DFC163C7BA300BA63D4 /* M2PreferenceController.xib */; };
+		B0BA9E01163C7CBF00BA63D4 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BA9E00163C7CBF00BA63D4 /* AppController.m */; };
+		B0BA9E03163C7FFC00BA63D4 /* M2Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BA9E02163C7FFC00BA63D4 /* M2Preferences.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +68,12 @@
 		B077106D162AF5D500E1ADCE /* testMeeting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testMeeting.m; sourceTree = "<group>"; };
 		B077106E162AF5D500E1ADCE /* testPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testPerson.m; sourceTree = "<group>"; };
 		B0BA9DF8163C650600BA63D4 /* M2ObserverManagerIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2ObserverManagerIF.h; sourceTree = "<group>"; };
+		B0BA9DFA163C7BA300BA63D4 /* M2PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M2PreferenceController.h; sourceTree = "<group>"; };
+		B0BA9DFB163C7BA300BA63D4 /* M2PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M2PreferenceController.m; sourceTree = "<group>"; };
+		B0BA9DFC163C7BA300BA63D4 /* M2PreferenceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = M2PreferenceController.xib; sourceTree = "<group>"; };
+		B0BA9DFF163C7CBF00BA63D4 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		B0BA9E00163C7CBF00BA63D4 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
+		B0BA9E02163C7FFC00BA63D4 /* M2Preferences.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = M2Preferences.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +141,12 @@
 			children = (
 				B077103C16299F6700E1ADCE /* Meet2Document.h */,
 				B077103D16299F6700E1ADCE /* Meet2Document.m */,
+				B0BA9DFA163C7BA300BA63D4 /* M2PreferenceController.h */,
+				B0BA9DFB163C7BA300BA63D4 /* M2PreferenceController.m */,
+				B0BA9DFC163C7BA300BA63D4 /* M2PreferenceController.xib */,
+				B0BA9DFF163C7CBF00BA63D4 /* AppController.h */,
+				B0BA9E00163C7CBF00BA63D4 /* AppController.m */,
+				B0BA9E02163C7FFC00BA63D4 /* M2Preferences.xib */,
 				B0BA9DF8163C650600BA63D4 /* M2ObserverManagerIF.h */,
 				B077103F16299F6700E1ADCE /* Meet2Document.xib */,
 				B077104216299F6700E1ADCE /* MainMenu.xib */,
@@ -254,6 +270,8 @@
 				B077103B16299F6700E1ADCE /* Credits.rtf in Resources */,
 				B077104116299F6700E1ADCE /* Meet2Document.xib in Resources */,
 				B077104416299F6700E1ADCE /* MainMenu.xib in Resources */,
+				B0BA9DFE163C7BA300BA63D4 /* M2PreferenceController.xib in Resources */,
+				B0BA9E03163C7FFC00BA63D4 /* M2Preferences.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +310,8 @@
 				B077103E16299F6700E1ADCE /* Meet2Document.m in Sources */,
 				B07710671629C05A00E1ADCE /* M2Person.m in Sources */,
 				B077106A1629C08800E1ADCE /* M2Meeting.m in Sources */,
+				B0BA9DFD163C7BA300BA63D4 /* M2PreferenceController.m in Sources */,
+				B0BA9E01163C7CBF00BA63D4 /* AppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

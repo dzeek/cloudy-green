@@ -40,6 +40,9 @@
 - (IBAction)startMeeting:(id)sender;
 - (IBAction)endMeeting:(id)sender;
 
+- (IBAction)meetingWithMarxBro:(id)sender;
+- (IBAction)meetingWithCaptains:(id)sender;
+
 - (void)insertObject:(M2Person *)object inPersonsPresentAtIndex:(NSUInteger)index;
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)index;
 

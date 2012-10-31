@@ -398,6 +398,14 @@ static void *M2DocumentKVOContext;
 }
 
 
+- (IBAction)meetingWithMarxBro:(id)sender
+{
+    [self setMeeting:[M2Meeting meetingWithMarxBrothers]];
+}
+- (IBAction)meetingWithCaptains:(id)sender
+{
+    [M2Meeting meetingWithCaptains];
+}
 
 
 

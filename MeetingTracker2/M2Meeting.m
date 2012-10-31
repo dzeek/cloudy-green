@@ -138,7 +138,7 @@
 - (void)addToPersonsPresent:(id)personsPresentObject
 {
     
-    NSLog(@"THIS DOESNT USUALLY GET CALLED");
+    NSLog(@"M2Meeting::addToPersonsPresent: THIS DOESNT USUALLY GET CALLED");
     if (nil == _personsPresent) {
         [self setPersonsPresent:[[NSMutableArray alloc] init]];
         NSLog(@"M2Meeting::addToPersonsPresent: Created array/lazy load");
@@ -175,6 +175,26 @@
         NSLog(@"M2Meeting::removeFromPersonsPresent: _personsPresent nil");
     }
 }
+- (void)mock_time
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    [dateFormatter autorelease];
+    
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    [usLocale autorelease];
+
+    NSDate* now = [[NSDate alloc] init];
+    setStartingTime:now;
+    setEndingTime:now;
+    
+    // NSString* now_caption = [dateFormatter stringFromDate:now];
+    // [[self meetStartTime] setStringValue:now_caption];
+    // [[self meetEndTimeLabel] setStringValue:@""];
+}
+
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)idx
 {
     NSLog(@"M2Meeting::removeObjectFromPersonsPresentAtIndex: entry");
@@ -229,7 +249,7 @@
 - (NSUInteger)countOfPersonsPresent {
     NSUInteger _count = [_personsPresent count];
 //    [_count retain];
-    //    [_meetingSize invalidate];
+//    [_meetingSize invalidate];
 //    [_meetingSize release];
     _meetingSize = _count;
     return _meetingSize;
@@ -287,10 +307,9 @@
 + (M2Meeting *)meetingWithStooges
 {
     M2Meeting* ret = [[M2Meeting alloc] init];
-    [ret setStartingTime:[[NSDate alloc] init]];
-    // NSString* moe_name = [[NSString alloc] initWithUTF8String:@"moe"];
-    // M2Person* moe = [M2Person personWithName:moe_name hourlyRate:5.25];
-                  //  initWithUTF8String:@"moe"];
+    // [ret setStartingTime:[[NSDate alloc] init]];
+    [ret mock_time];
+    
     M2Person* moe = [M2Person personWithName:@"moe" hourlyRate:5.25];
     [ret addToPersonsPresent:moe];
     

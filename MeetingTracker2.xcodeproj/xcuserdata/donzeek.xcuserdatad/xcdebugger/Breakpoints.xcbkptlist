@@ -91,7 +91,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "207"
          endingLineNumber = "207"
-         landmarkName = "-insertObject:inPersonsPresentAtIndex:"
+         landmarkName = "-removeObjectFromPersonsPresentAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

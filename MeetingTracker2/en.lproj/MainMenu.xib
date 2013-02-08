@@ -736,8 +736,8 @@
 										<array class="NSMutableArray" key="NSMenuItems">
 											<object class="NSMenuItem" id="355429100">
 												<reference key="NSMenu" ref="53185147"/>
-												<string key="NSTitle">Marx B</string>
-												<string key="NSKeyEquiv"/>
+												<string key="NSTitle">Marx Bros</string>
+												<string key="NSKeyEquiv"></string>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1033313550"/>
 												<reference key="NSMixedImage" ref="310636482"/>
@@ -745,6 +745,14 @@
 											<object class="NSMenuItem" id="163955333">
 												<reference key="NSMenu" ref="53185147"/>
 												<string key="NSTitle">Captains</string>
+												<string key="NSKeyEquiv"/>
+												<int key="NSMnemonicLoc">2147483647</int>
+												<reference key="NSOnImage" ref="1033313550"/>
+												<reference key="NSMixedImage" ref="310636482"/>
+											</object>
+											<object class="NSMenuItem" id="913898590">
+												<reference key="NSMenu" ref="53185147"/>
+												<string key="NSTitle">Stooges</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<reference key="NSOnImage" ref="1033313550"/>
@@ -2019,6 +2027,14 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
+						<string key="label">meetingWithStooges:</string>
+						<reference key="source" ref="1014"/>
+						<reference key="destination" ref="913898590"/>
+					</object>
+					<int key="connectionID">553</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
 						<string key="label">modifyFont:</string>
 						<reference key="source" ref="739804602"/>
 						<reference key="destination" ref="410574898"/>
@@ -2719,6 +2735,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="355429100"/>
 							<reference ref="163955333"/>
+							<reference ref="913898590"/>
 						</array>
 						<reference key="parent" ref="642059572"/>
 					</object>
@@ -3110,6 +3127,11 @@
 						<reference key="object" ref="163955333"/>
 						<reference key="parent" ref="53185147"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">552</int>
+						<reference key="object" ref="913898590"/>
+						<reference key="parent" ref="53185147"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -3258,6 +3280,7 @@
 				<string key="545.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="546.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="552.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="57.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="58.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3277,7 +3300,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">551</int>
+			<int key="maxID">553</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3327,6 +3350,7 @@
 						<string key="logParticipants:">id</string>
 						<string key="meetingWithCaptains:">id</string>
 						<string key="meetingWithMarxBro:">id</string>
+						<string key="meetingWithStooges:">id</string>
 						<string key="startMeeting:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -3348,6 +3372,10 @@
 						</object>
 						<object class="IBActionInfo" key="meetingWithMarxBro:">
 							<string key="name">meetingWithMarxBro:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="meetingWithStooges:">
+							<string key="name">meetingWithStooges:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="startMeeting:">

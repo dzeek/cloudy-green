@@ -42,6 +42,7 @@
 
 - (IBAction)meetingWithMarxBro:(id)sender;
 - (IBAction)meetingWithCaptains:(id)sender;
+- (IBAction)meetingWithStooges:(id)sender;
 
 - (void)insertObject:(M2Person *)object inPersonsPresentAtIndex:(NSUInteger)index;
 - (void)removeObjectFromPersonsPresentAtIndex:(NSUInteger)index;

@@ -138,7 +138,7 @@
 - (void)addToPersonsPresent:(id)personsPresentObject
 {
     
-    NSLog(@"M2Meeting::addToPersonsPresent: THIS DOESNT USUALLY GET CALLED");
+    // NSLog(@"M2Meeting::addToPersonsPresent: THIS DOESNT USUALLY GET CALLED");
     if (nil == _personsPresent) {
         [self setPersonsPresent:[[NSMutableArray alloc] init]];
         NSLog(@"M2Meeting::addToPersonsPresent: Created array/lazy load");
@@ -151,7 +151,9 @@
         
         NSLog(@"M2Meeting::addToPersonsPresent: m2person: %@", m2person);
         
-        [m2person setHourlyRate:def_hourly_rate];
+        if (nil == [m2person hourlyRate]) {
+            [m2person setHourlyRate:def_hourly_rate];
+        }
     } else {
         NSLog(@"M2Meeting::addToPersonsPresent: NOT an m2person");
     }
@@ -313,6 +315,12 @@
     M2Person* moe = [M2Person personWithName:@"moe" hourlyRate:5.25];
     [ret addToPersonsPresent:moe];
     
+    M2Person* joe = [M2Person personWithName:@"joe" hourlyRate:7.80];
+    [ret addToPersonsPresent:joe];
+    
+    M2Person* larry = [M2Person personWithName:@"larry" hourlyRate:3.50];
+    [ret addToPersonsPresent:larry];
+    
     return ret;
 }
 + (M2Meeting *)meetingWithCaptains
@@ -320,8 +328,11 @@
     M2Meeting* ret = [[M2Meeting alloc] init];
     [ret setStartingTime:[[NSDate alloc] init]];
 
-    M2Person* kirk = [M2Person personWithName:@"kirk" hourlyRate:305.25];
+    M2Person* kirk = [M2Person personWithName:@"kirk" hourlyRate:920.00];
     [ret addToPersonsPresent:kirk];
+    
+    M2Person* pickard = [M2Person personWithName:@"pickard" hourlyRate:1200.50];
+    [ret addToPersonsPresent:pickard];
     
     return ret;
 }
@@ -332,6 +343,9 @@
     
     M2Person* groucho = [M2Person personWithName:@"groucho" hourlyRate:305.25];
     [ret addToPersonsPresent:groucho];
+    
+    M2Person* chico = [M2Person personWithName:@"chico" hourlyRate:250.25];
+    [ret addToPersonsPresent:chico];
     
     return ret;
 }

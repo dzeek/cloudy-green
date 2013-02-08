@@ -404,7 +404,11 @@ static void *M2DocumentKVOContext;
 }
 - (IBAction)meetingWithCaptains:(id)sender
 {
-    [M2Meeting meetingWithCaptains];
+    [self setMeeting:[M2Meeting meetingWithCaptains]];
+}
+- (IBAction)meetingWithStooges:(id)sender
+{
+    [self setMeeting:[M2Meeting meetingWithStooges]];
 }
 
 
